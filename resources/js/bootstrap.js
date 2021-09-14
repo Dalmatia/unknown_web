@@ -13,6 +13,7 @@ try {
     require('bootstrap');
 } catch (e) { }
 
+import { Resolver } from 'laravel-mix/src/Resolver';
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -30,6 +31,11 @@ window.axios.interceptors.request.use(config => {
 
     return config
 });
+
+window.axios.interceptors.response.use(
+    response => response,
+    error => error.response || error
+);
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
