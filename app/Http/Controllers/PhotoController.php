@@ -33,12 +33,13 @@ class PhotoController extends Controller
 
         // インスタンス生成時に割り振られたランダムなID値と
         // 本来の拡張子を組み合わせてファイル名とする
-        $photo->filename = $photo->id . '_' . $extension;
+        $photo->filename = $photo->id . '.' . $extension;
 
-        // S3にファイルを保存する
+        // storage/app/public配下に保存する
         // 第三引数の'public'はファイルを公開状態で保存するため
-        Storage::cloud()
-            ->putFileAs('', $request->photo, $photo->filename, 'public');
+        // Storage::cloud()
+        //     ->putFileAs('', $request->photo, $photo->filename, 'public');
+        $request->photo->storeAs('photos', $photo->filename, 'public');
 
         // データベースエラー時にファイル削除を行うため
         // トランザクションを利用する
@@ -50,7 +51,7 @@ class PhotoController extends Controller
         } catch (\Exception $exception) {
             DB::rollBack();
             // DBとの不整合を避けるためアップロードしたファイルを削除
-            Storage::cloud()->delete($photo->filename);
+            Storage::disk()->delete($photo->filename);
             throw $exception;
         }
 
