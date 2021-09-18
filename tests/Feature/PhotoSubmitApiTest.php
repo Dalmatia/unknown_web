@@ -9,7 +9,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
-use Stringable;
 use Tests\TestCase;
 
 class PhotoSubmitApiTest extends TestCase
