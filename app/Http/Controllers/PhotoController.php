@@ -20,6 +20,17 @@ class PhotoController extends Controller
     }
 
     /**
+     * 写真一覧
+     */
+    public function index()
+    {
+        $photos = Photo::with(['owner'])
+            ->orderBy(Photo::CREATED_AT, 'desc')->paginate();
+
+        return $photos;
+    }
+
+    /**
      * 写真投稿
      * @param StorePhoto $request
      * @return Illuminate\Http\Response
@@ -57,17 +68,6 @@ class PhotoController extends Controller
 
         // リソースの新規作成なのでレスポンスコードは201(CREATED)を返却する
         return response($photo, 201);
-    }
-
-    /**
-     * 写真一覧
-     */
-    public function index()
-    {
-        $photos = Photo::with(['owner'])
-            ->orderBy(Photo::CREATED_AT, 'desc')->paginate();
-
-        return $photos;
     }
 
     /**

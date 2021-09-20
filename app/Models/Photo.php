@@ -21,6 +21,8 @@ class Photo extends Model
         'url',
     ];
 
+    protected $perPage = 10;
+
     // IDの桁数
     const ID_LENGTH = 12;
 
@@ -78,6 +80,6 @@ class Photo extends Model
      */
     public function getUrlAttribute()
     {
-        return Storage::url($this->attributes['filename']); // S3を使っていないため、変更
+        return Storage::url('photos/' . $this->attributes['filename']); // S3を使っていないため、変更
     }
 }

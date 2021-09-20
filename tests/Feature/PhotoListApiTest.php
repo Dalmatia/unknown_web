@@ -32,8 +32,8 @@ class PhotoListApiTest extends TestCase
         $photos = Photo::with(['owner'])->orderBy('created_at', 'desc')->get();
 
         // data項目の期待値
-        $expected_data = $photos->map(function($photo) {
-            return[
+        $expected_data = $photos->map(function ($photo) {
+            return [
                 'id' => $photo->id,
                 'url' => $photo->url,
                 'owner' => [
