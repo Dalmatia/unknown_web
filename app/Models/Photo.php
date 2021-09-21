@@ -13,7 +13,7 @@ class Photo extends Model
 
     /** JSONに含める属性 */
     protected $visible = [
-        'id', 'owner', 'url',
+        'id', 'owner', 'url', 'comments',
     ];
 
     /** JSONに含める属性 */
@@ -81,5 +81,14 @@ class Photo extends Model
     public function getUrlAttribute()
     {
         return Storage::url('photos/' . $this->attributes['filename']); // S3を使っていないため、変更
+    }
+
+    /**
+     * リレーションシップ - commentsテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment')->orderBy('id', 'desc');
     }
 }

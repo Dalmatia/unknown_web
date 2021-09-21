@@ -18,7 +18,9 @@ class PhotoDetailApiTest extends TestCase
      */
     public function returnJsonTest()
     {
-        Photo::factory()->create();
+        Photo::factory()->create()->each(function ($photo) {
+            $photo->comments()->saveMany(factory(Comment::class, 3)->make());
+        });
         $photo = Photo::first();
 
         $response = $this->json('GET', route('photo.show', [
@@ -32,6 +34,17 @@ class PhotoDetailApiTest extends TestCase
                 'owner' => [
                     'name' => $photo->owner->name,
                 ],
+                'comments' => $photo->comments
+                    ->sortByDesc('id')
+                    ->map(function ($comment) {
+                        return [
+                            'author' => [
+                                'name' => $comment->author->name,
+                            ],
+                            'content' => $comment->content,
+                        ];
+                    })
+                    ->all(),
             ]);
     }
 }
