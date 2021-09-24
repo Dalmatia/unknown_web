@@ -10,7 +10,7 @@ import { mapState } from 'vuex';
 export default {
   computed: {
     ...mapState({
-      message: (state) => state.message.content,
+      message: state => state.message.content,
     })
   }
 };

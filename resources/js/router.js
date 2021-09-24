@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import PhotoDetail from './pages/PhotoDetail.vue';
 
 // ページコンポーネントをインポートする
 import PhotoList from './pages/PhotoList.vue';
+import PhotoDetail from './pages/PhotoDetail.vue';
 import Login from './pages/Login.vue';
+import SystemError from './pages/errors/System.vue';
 
 import store from './store'; // 追加
-import SystemError from './pages/errors/System.vue';
 
 // VueRouterプラグインを使用する
 // これによって<RouterView />コンポーネントなどを使うことができる
@@ -49,7 +49,7 @@ const routes = [
 const router = new VueRouter({
   mode: 'history', // 追加: URLの#が消える
   scrollBehavior() {
-    return { x:0, y:0}
+    return { x:0, y:0 }
   },
   routes
 });
